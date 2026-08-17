@@ -172,57 +172,13 @@
     color:var(--mid-blue);
     opacity:0.75;
   }
-  .salsicha{
-    width:150px;
-    height:auto;
-    overflow:visible;
-  }
-  .salsicha-corpo{
-    animation:respirar 2.8s ease-in-out infinite;
-    transform-origin:50% 75%;
-  }
-  .salsicha-rabo{
-    animation:abanar 0.55s ease-in-out infinite;
-    transform-origin:46px 90px;
-  }
-  .salsicha-orelha{
-    animation:balancar-orelha 2.8s ease-in-out infinite;
-    transform-origin:150px 15px;
-  }
-  .salsicha-pata-tras{
-    animation:andar1 1.3s ease-in-out infinite;
-    transform-origin:83px 100px;
-  }
-  .salsicha-pata-frente{
-    animation:andar2 1.3s ease-in-out infinite;
-    transform-origin:173px 100px;
-  }
-
-  @keyframes respirar{
-    0%,100%{ transform:scaleY(1) translateY(0); }
-    50%{ transform:scaleY(1.025) translateY(-2px); }
-  }
-  @keyframes abanar{
-    0%,100%{ transform:rotate(-10deg); }
-    50%{ transform:rotate(14deg); }
-  }
-  @keyframes balancar-orelha{
-    0%,100%{ transform:rotate(-3deg); }
-    50%{ transform:rotate(4deg); }
-  }
-  @keyframes andar1{
-    0%,100%{ transform:rotate(-5deg); }
-    50%{ transform:rotate(6deg); }
-  }
-  @keyframes andar2{
-    0%,100%{ transform:rotate(6deg); }
-    50%{ transform:rotate(-5deg); }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .salsicha-corpo,.salsicha-rabo,.salsicha-orelha,.salsicha-pata-tras,.salsicha-pata-frente{
-      animation:none;
-    }
+  .salsicha-video{
+    width:160px;
+    height:160px;
+    object-fit:cover;
+    border-radius:60%;
+    border:2px solid var(--brass);
+    box-shadow:0 6px 18px rgba(27,58,92,0.18);
   }
 
   .verso.final{
@@ -270,60 +226,17 @@
 <script>
   // ---------- CONFIGURAÇÃO ----------
   const SALSICHA_SVG = `
-  <svg class="salsicha" viewBox="0 0 220 145" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <g class="salsicha-corpo">
-
-      <!-- rabo -->
-      <path class="salsicha-rabo" d="M46,92 C28,90 14,78 15,60 C15.5,52 24,50 27,57 C31,68 36,80 48,86 Z"
-            fill="#c9a227" stroke="#1b3a5c" stroke-width="2.2" stroke-linejoin="round"/>
-
-      <!-- pernas traseiras (mais distantes, sombra) -->
-      <rect x="58" y="100" width="13" height="28" rx="6.5" fill="#9f7d21" stroke="#1b3a5c" stroke-width="1.6"/>
-      <rect x="148" y="100" width="13" height="28" rx="6.5" fill="#9f7d21" stroke="#1b3a5c" stroke-width="1.6"/>
-
-      <!-- corpo -->
-      <path d="M40,92 C34,62 58,50 88,48 C118,46 158,48 178,58 C194,66 196,86 184,98
-               C174,108 150,112 115,112 C82,112 52,110 42,100 Z"
-            fill="#c9a227" stroke="#1b3a5c" stroke-width="2.6" stroke-linejoin="round"/>
-      <!-- barriga clara -->
-      <path d="M56,98 C80,108 140,108 168,96 C160,104 130,109 110,109 C86,109 64,106 56,98 Z"
-            fill="#e9dcb6" opacity="0.85"/>
-
-      <!-- pernas dianteiras (mais próximas) -->
-      <rect class="salsicha-pata-tras" x="76" y="100" width="14" height="30" rx="7" fill="#c9a227" stroke="#1b3a5c" stroke-width="2"/>
-      <rect class="salsicha-pata-frente" x="166" y="100" width="14" height="30" rx="7" fill="#c9a227" stroke="#1b3a5c" stroke-width="2"/>
-
-      <!-- pescoço + cabeça -->
-      <path d="M168,55 C180,42 182,26 175,16 C168,7 152,5 142,13 C133,20 132,34 140,46 C148,56 158,60 168,55 Z"
-            fill="#c9a227" stroke="#1b3a5c" stroke-width="2.6" stroke-linejoin="round"/>
-
-      <!-- orelha -->
-      <path class="salsicha-orelha" d="M150,15 C134,18 126,36 134,54 C138,62 150,60 152,48 C154,36 154,24 150,15 Z"
-            fill="#a9852f" stroke="#1b3a5c" stroke-width="2.2" stroke-linejoin="round"/>
-
-      <!-- focinho -->
-      <path d="M172,20 C186,18 198,24 200,33 C201,40 194,44 186,42 C178,40 170,30 172,20 Z"
-            fill="#d9bd6f" stroke="#1b3a5c" stroke-width="2.2" stroke-linejoin="round"/>
-
-      <!-- nariz -->
-      <ellipse cx="197" cy="31" rx="4.6" ry="3.4" fill="#1b3a5c"/>
-
-      <!-- olho -->
-      <circle cx="162" cy="20" r="3.4" fill="#1b3a5c"/>
-      <circle cx="163.2" cy="18.7" r="1" fill="#fffdf7"/>
-
-      <!-- sobrancelha carinhosa -->
-      <path d="M154,12 C158,9 163,9 166,12" fill="none" stroke="#1b3a5c" stroke-width="1.6" stroke-linecap="round"/>
-
-    </g>
-  </svg>`;
+    <video class="salsicha-video" autoplay loop muted playsinline>
+      <source src="assets/salsicha_loop.mp4" type="video/mp4">
+    </video>
+  `;
 
   // Data em que o primeiro verso é liberado (ano, mês-1, dia)
   const DATA_INICIO = new Date(2026, 7, 17); // segunda-feira, 17 de agosto de 2026
-  DATA_INICIO.setHours(0,0,0,0);
+  DATA_INICIO.setHours(15,0,0,0);
 
   const teaser = {
-    dia: "Hoje",
+    dia: "Domingo",
     texto: "Nós vamos ter uma conversa…"
   };
 
