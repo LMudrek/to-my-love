@@ -231,7 +231,7 @@
     "salsicha_praia.mp4"
   ]
 
-  var salsicha_choose = Math.round((Math.random() * 100) % (SALSICHA_FILES.length - 1))
+  var salsicha_choose = Math.floor(Math.random() * SALSICHA_FILES.length)
   
   console.info("Salsicha choose:", salsicha_choose)
   var asset = SALSICHA_FILES[salsicha_choose]
