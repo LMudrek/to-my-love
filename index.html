@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para a Juju</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital@0;1&display=swap');
+
+  :root{
+    --navy:#1b3a5c;
+    --mid-blue:#3d6d99;
+    --cream:#f6f1e4;
+    --white:#fffdf7;
+    --brass:#a9852f;
+    --line:#c9c0a6;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--cream);
+    font-family:'EB Garamond', serif;
+    color:var(--navy);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  /* ---------- toldo listrado (awning header) ---------- */
+  .awning{
+    width:100%;
+    background:repeating-linear-gradient(
+      90deg,
+      var(--navy) 0px, var(--navy) 40px,
+      var(--white) 40px, var(--white) 80px
+    );
+    padding:0;
+    position:relative;
+    box-shadow:0 6px 18px rgba(27,58,92,0.18);
+  }
+  .awning-scallop{
+    height:22px;
+    width:100%;
+    background:
+      radial-gradient(circle at 20px 0, transparent 20px, var(--cream) 21px) 0 -1px / 40px 22px repeat-x;
+  }
+  .awning-inner{
+    padding:44px 24px 32px;
+    text-align:center;
+    display:flex;
+    justify-content:center;
+  }
+  .awning-plaque{
+    background:rgba(27,58,92,0.42);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    padding:28px 40px;
+    border:1px solid rgba(255,253,247,0.45);
+    border-radius:6px;
+    box-shadow:0 8px 32px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.25);
+    max-width:90%;
+  }
+  .eyebrow{
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    color:var(--white);
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    font-size:12px;
+    margin:0 0 10px;
+  }
+  h1{
+    font-family:'Cormorant Garamond', serif;
+    color:var(--white);
+    font-weight:500;
+    font-size:clamp(34px,6vw,58px);
+    letter-spacing:0.04em;
+    margin:0;
+    text-shadow:0 2px 12px rgba(0,0,0,0.35);
+  }
+  .subtitle{
+    color:var(--white);
+    font-style:italic;
+    font-size:15px;
+    margin:10px 0 0;
+    opacity:0.9;
+  }
+
+  /* ---------- corpo ---------- */
+  main{
+    width:100%;
+    max-width:640px;
+    padding:56px 24px 90px;
+  }
+
+  .intro{
+    text-align:center;
+    font-style:italic;
+    color:var(--mid-blue);
+    font-size:17px;
+    line-height:1.7;
+    margin-bottom:56px;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:22px 10px;
+  }
+
+  .verso{
+    position:relative;
+    border:1px solid var(--line);
+    background:var(--white);
+    padding:34px 30px;
+    margin-bottom:28px;
+    text-align:center;
+    transition:opacity 0.6s ease, transform 0.6s ease;
+  }
+  .verso::before,
+  .verso::after{
+    content:"";
+    position:absolute;
+    width:10px;height:10px;
+    border:1px solid var(--brass);
+  }
+  .verso::before{top:8px;left:8px;border-right:none;border-bottom:none;}
+  .verso::after{bottom:8px;right:8px;border-left:none;border-top:none;}
+
+  .verso-dia{
+    font-size:11px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--brass);
+    margin:0 0 14px;
+  }
+  .verso-texto{
+    font-family:'Cormorant Garamond', serif;
+    font-size:clamp(20px,3.4vw,26px);
+    line-height:1.55;
+    color:var(--navy);
+    margin:0;
+  }
+
+  .verso.bloqueado{
+    background:repeating-linear-gradient(
+      135deg,
+      var(--cream) 0px, var(--cream) 14px,
+      #efe8d4 14px, #efe8d4 28px
+    );
+  }
+  .verso.bloqueado .verso-texto{
+    color:var(--mid-blue);
+    opacity:0.55;
+    font-style:italic;
+  }
+  .selo{
+    display:inline-block;
+    margin-top:14px;
+  }
+
+  /* ---------- cachorro salsicha animado ---------- */
+  .salsicha-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+  }
+  .salsicha-legenda{
+    font-size:11px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:var(--mid-blue);
+    opacity:0.75;
+  }
+  .salsicha{
+    width:150px;
+    height:auto;
+    overflow:visible;
+  }
+  .salsicha-corpo{
+    animation:respirar 2.8s ease-in-out infinite;
+    transform-origin:50% 75%;
+  }
+  .salsicha-rabo{
+    animation:abanar 0.55s ease-in-out infinite;
+    transform-origin:46px 90px;
+  }
+  .salsicha-orelha{
+    animation:balancar-orelha 2.8s ease-in-out infinite;
+    transform-origin:150px 15px;
+  }
+  .salsicha-pata-tras{
+    animation:andar1 1.3s ease-in-out infinite;
+    transform-origin:83px 100px;
+  }
+  .salsicha-pata-frente{
+    animation:andar2 1.3s ease-in-out infinite;
+    transform-origin:173px 100px;
+  }
+
+  @keyframes respirar{
+    0%,100%{ transform:scaleY(1) translateY(0); }
+    50%{ transform:scaleY(1.025) translateY(-2px); }
+  }
+  @keyframes abanar{
+    0%,100%{ transform:rotate(-10deg); }
+    50%{ transform:rotate(14deg); }
+  }
+  @keyframes balancar-orelha{
+    0%,100%{ transform:rotate(-3deg); }
+    50%{ transform:rotate(4deg); }
+  }
+  @keyframes andar1{
+    0%,100%{ transform:rotate(-5deg); }
+    50%{ transform:rotate(6deg); }
+  }
+  @keyframes andar2{
+    0%,100%{ transform:rotate(6deg); }
+    50%{ transform:rotate(-5deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .salsicha-corpo,.salsicha-rabo,.salsicha-orelha,.salsicha-pata-tras,.salsicha-pata-frente{
+      animation:none;
+    }
+  }
+
+  .verso.final{
+    border-color:var(--brass);
+    border-width:2px;
+  }
+  .verso.final .verso-dia{color:var(--navy);}
+
+  footer{
+    width:100%;
+    text-align:center;
+    padding:26px 20px 40px;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--mid-blue);
+    opacity:0.7;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .verso{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="awning">
+    <div class="awning-inner">
+      <div class="awning-plaque">
+        <p class="eyebrow">Uma carta em partes</p>
+        <h1>Para a Juju</h1>
+        <p class="subtitle">de Leo, aos poucos</p>
+      </div>
+    </div>
+  </div>
+  <div class="awning-scallop"></div>
+
+  <main>
+    <p class="intro">Cada dia revela uma parte. Volte amanhã.</p>
+    <div id="versos"></div>
+  </main>
+
+  <footer>feito com o tempo, não com pressa</footer>
+
+<script>
+  // ---------- CONFIGURAÇÃO ----------
+  const SALSICHA_SVG = `
+  <svg class="salsicha" viewBox="0 0 220 145" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g class="salsicha-corpo">
+
+      <!-- rabo -->
+      <path class="salsicha-rabo" d="M46,92 C28,90 14,78 15,60 C15.5,52 24,50 27,57 C31,68 36,80 48,86 Z"
+            fill="#c9a227" stroke="#1b3a5c" stroke-width="2.2" stroke-linejoin="round"/>
+
+      <!-- pernas traseiras (mais distantes, sombra) -->
+      <rect x="58" y="100" width="13" height="28" rx="6.5" fill="#9f7d21" stroke="#1b3a5c" stroke-width="1.6"/>
+      <rect x="148" y="100" width="13" height="28" rx="6.5" fill="#9f7d21" stroke="#1b3a5c" stroke-width="1.6"/>
+
+      <!-- corpo -->
+      <path d="M40,92 C34,62 58,50 88,48 C118,46 158,48 178,58 C194,66 196,86 184,98
+               C174,108 150,112 115,112 C82,112 52,110 42,100 Z"
+            fill="#c9a227" stroke="#1b3a5c" stroke-width="2.6" stroke-linejoin="round"/>
+      <!-- barriga clara -->
+      <path d="M56,98 C80,108 140,108 168,96 C160,104 130,109 110,109 C86,109 64,106 56,98 Z"
+            fill="#e9dcb6" opacity="0.85"/>
+
+      <!-- pernas dianteiras (mais próximas) -->
+      <rect class="salsicha-pata-tras" x="76" y="100" width="14" height="30" rx="7" fill="#c9a227" stroke="#1b3a5c" stroke-width="2"/>
+      <rect class="salsicha-pata-frente" x="166" y="100" width="14" height="30" rx="7" fill="#c9a227" stroke="#1b3a5c" stroke-width="2"/>
+
+      <!-- pescoço + cabeça -->
+      <path d="M168,55 C180,42 182,26 175,16 C168,7 152,5 142,13 C133,20 132,34 140,46 C148,56 158,60 168,55 Z"
+            fill="#c9a227" stroke="#1b3a5c" stroke-width="2.6" stroke-linejoin="round"/>
+
+      <!-- orelha -->
+      <path class="salsicha-orelha" d="M150,15 C134,18 126,36 134,54 C138,62 150,60 152,48 C154,36 154,24 150,15 Z"
+            fill="#a9852f" stroke="#1b3a5c" stroke-width="2.2" stroke-linejoin="round"/>
+
+      <!-- focinho -->
+      <path d="M172,20 C186,18 198,24 200,33 C201,40 194,44 186,42 C178,40 170,30 172,20 Z"
+            fill="#d9bd6f" stroke="#1b3a5c" stroke-width="2.2" stroke-linejoin="round"/>
+
+      <!-- nariz -->
+      <ellipse cx="197" cy="31" rx="4.6" ry="3.4" fill="#1b3a5c"/>
+
+      <!-- olho -->
+      <circle cx="162" cy="20" r="3.4" fill="#1b3a5c"/>
+      <circle cx="163.2" cy="18.7" r="1" fill="#fffdf7"/>
+
+      <!-- sobrancelha carinhosa -->
+      <path d="M154,12 C158,9 163,9 166,12" fill="none" stroke="#1b3a5c" stroke-width="1.6" stroke-linecap="round"/>
+
+    </g>
+  </svg>`;
+
+  // Data em que o primeiro verso é liberado (ano, mês-1, dia)
+  const DATA_INICIO = new Date(2026, 7, 17); // segunda-feira, 17 de agosto de 2026
+  DATA_INICIO.setHours(0,0,0,0);
+
+  const teaser = {
+    dia: "Hoje",
+    texto: "Nós vamos ter uma conversa…"
+  };
+
+  const versos = [
+    {
+      dia: "Segunda-feira",
+      texto: "Nossas vidas já estavam interligadas antes do nosso nascimento\n\nSeguimos separados, por um longo tempo"
+    },
+    {
+      dia: "Terça-feira",
+      texto: "Nos encontramos…\n\nPlantamos uma semente 6 anos atrás"
+    },
+    {
+      dia: "Quarta-feira",
+      texto: "O primeiro beijo não significou que iríamos continuar juntos naquele momento… naquele momento\n\nFomos cuidando e regando cada um de um lado"
+    },
+    {
+      dia: "Mais um dia",
+      texto: "Plantamos uma semente 6 anos atrás\n\nAgora nós devemos nos tornar um só e colher os frutos de uma vida juntos ao lado de Deus"
+    }
+  ];
+
+  function diasPassados(){
+    const hoje = new Date();
+    hoje.setHours(0,0,0,0);
+    const diffMs = hoje - DATA_INICIO;
+    return Math.floor(diffMs / 86400000);
+  }
+
+  function render(){
+    const container = document.getElementById('versos');
+    container.innerHTML = '';
+    const liberados = diasPassados(); // 0 = primeiro verso liberado; negativo = ainda no teaser
+
+    if(liberados < 0){
+      const div = document.createElement('div');
+      div.className = 'verso teaser';
+      div.innerHTML = `
+        <p class="verso-dia">${teaser.dia}</p>
+        <p class="verso-texto">${teaser.texto}</p>
+        <div class="selo">
+          <div class="salsicha-wrap">
+            ${SALSICHA_SVG}
+            <p class="salsicha-legenda"></p>
+          </div>
+        </div>
+      `;
+      container.appendChild(div);
+      return;
+    }
+
+    versos.forEach((v, i) => {
+      const div = document.createElement('div');
+      const desbloqueado = i <= liberados;
+      const ehFinal = i === versos.length - 1;
+
+      div.className = 'verso' + (desbloqueado ? '' : ' bloqueado') + (desbloqueado && ehFinal ? ' final' : '');
+
+      if(desbloqueado){
+        div.innerHTML = `
+          <p class="verso-dia">${v.dia}</p>
+          <p class="verso-texto">${v.texto.replace(/\n/g,'<br>')}</p>
+        `;
+      } else {
+        div.innerHTML = `
+          <p class="verso-dia">${v.dia}</p>
+          <p class="verso-texto">ainda guardado…</p>
+          <div class="selo">
+            <div class="salsicha-wrap">
+              ${SALSICHA_SVG}
+              <p class="salsicha-legenda"></p>
+            </div>
+          </div>
+        `;
+      }
+      container.appendChild(div);
+    });
+  }
+
+  render();
+</script>
+
+</body>
+</html>
