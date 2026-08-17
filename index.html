@@ -225,9 +225,20 @@
 
 <script>
   // ---------- CONFIGURAÇÃO ----------
+  const SALSICHA_FILES = [
+    "salsicha_france.mp4",
+    "salsicha_loop_cartoon.mp4",
+    "salsicha_praia.mp4"
+  ]
+
+  var salsicha_choose = Math.round((Math.random() * 100) % (SALSICHA_FILES.length - 1))
+  
+  console.info("Salsicha choose:", salsicha_choose)
+  var asset = SALSICHA_FILES[salsicha_choose]
+  
   const SALSICHA_SVG = `
     <video class="salsicha-video" autoplay loop muted playsinline>
-      <source src="assets/salsicha_loop.mp4" type="video/mp4">
+      <source src="assets/${asset}" type="video/mp4">
     </video>
   `;
 
