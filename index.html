@@ -226,21 +226,39 @@
 <script>
   // ---------- CONFIGURAÇÃO ----------
   const SALSICHA_FILES = [
-    "salsicha_france.mp4",
-    "salsicha_loop_cartoon.mp4",
-    "salsicha_praia.mp4"
-  ]
+    "salsicha_loop_cartoon_lower.mp4",
+    "salsicha_praia_lower.mp4",
+    "salsicha_praia_deitado_lower.mp4",
+    "salsicha_coberta_lower.mp4",
+    "salsicha_cheirando_lower.mp4"
+  ];
 
-  var salsicha_choose = Math.floor(Math.random() * SALSICHA_FILES.length)
-  
-  console.info("Salsicha choose:", salsicha_choose)
-  var asset = SALSICHA_FILES[salsicha_choose]
-  
-  const SALSICHA_SVG = `
-    <video class="salsicha-video" autoplay loop muted playsinline>
-      <source src="assets/${asset}" type="video/mp4">
-    </video>
-  `;
+  // Embaralha a lista uma vez (Fisher-Yates) e vai puxando em ordem,
+  // sem repetição, até esgotar — depois reembaralha e continua.
+  let salsichaFila = [];
+  function embaralhar(lista){
+    const copia = [...lista];
+    for(let i = copia.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [copia[i], copia[j]] = [copia[j], copia[i]];
+    }
+    return copia;
+  }
+  function proximoAsset(){
+    if(salsichaFila.length === 0){
+      salsichaFila = embaralhar(SALSICHA_FILES);
+    }
+    return salsichaFila.pop();
+  }
+
+  function salsichaHTML(){
+    const asset = proximoAsset();
+    return `
+      <video class="salsicha-video" autoplay loop muted playsinline>
+        <source src="assets/${asset}" type="video/mp4">
+      </video>
+    `;
+  }
 
   // Data em que o primeiro verso é liberado (ano, mês-1, dia)
   const DATA_INICIO = new Date(2026, 7, 17); // segunda-feira, 17 de agosto de 2026
@@ -294,7 +312,7 @@
         <p class="verso-texto">${teaser.texto}</p>
         <div class="selo">
           <div class="salsicha-wrap">
-            ${SALSICHA_SVG}
+            ${salsichaHTML()}
             <p class="salsicha-legenda"></p>
           </div>
         </div>
@@ -321,7 +339,7 @@
           <p class="verso-texto">ainda guardado…</p>
           <div class="selo">
             <div class="salsicha-wrap">
-              ${SALSICHA_SVG}
+              ${salsichaHTML()}
               <p class="salsicha-legenda"></p>
             </div>
           </div>
